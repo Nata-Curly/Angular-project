@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { RecipeService } from './../recipe.service';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 
 @Component({
@@ -7,20 +8,12 @@ import { Recipe } from '../recipe.model';
   styleUrl: './recipe-list.component.css'
 })
 export class RecipeListComponent implements OnInit{
-@Output()  RecipeSelected = new EventEmitter<Recipe>();
+  recipes: Recipe[];
 
-  recipes: Recipe[] = [
-    new Recipe('Test recipe', 'This is just a test', 'https://www.budgetbytes.com/wp-content/uploads/2013/07/How-to-Calculate-Recipe-Costs-H.jpg'),
-    new Recipe('Another test recipe', 'This is just a test', 'https://www.budgetbytes.com/wp-content/uploads/2013/07/How-to-Calculate-Recipe-Costs-H.jpg'),
-  ];
-
-  constructor() { };
+  constructor(private RecipeService: RecipeService) { };
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.recipes = this.RecipeService.getRecipes();
   };
 
-  onRecipeSelected(recipe: Recipe) {
-    this.RecipeSelected.emit(recipe);
-  }
 }
